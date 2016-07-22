@@ -15,11 +15,13 @@ public enum PopoverOption {
   case CornerRadius(CGFloat)
   case SideEdge(CGFloat)
   case BlackOverlayColor(UIColor)
+  @available(iOS 8.0, *)
   case OverlayBlur(UIBlurEffectStyle)
   case Type(Popover.PopoverType)
   case Color(UIColor)
 }
 
+@available(iOS 8.0, *)
 public class Popover: UIView {
 
   public enum PopoverType {
@@ -73,7 +75,11 @@ public class Popover: UIView {
         case let .BlackOverlayColor(value):
           self.blackOverlayColor = value
         case let .OverlayBlur(style):
-          self.overlayBlur = UIBlurEffect(style: style)
+          if #available(iOS 8.0, *) {
+              self.overlayBlur = UIBlurEffect(style: style)
+          } else {
+              // Fallback on earlier versions
+          }
         case let .Type(value):
           self.popoverType = value
         case let .Color(value):
